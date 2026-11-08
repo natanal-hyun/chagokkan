@@ -2,6 +2,7 @@ import 'dotenv/config'
 import cors from 'cors'
 import express from 'express'
 import { logDatabaseError, pool } from './db.js'
+import { tmdbRouter } from './routes/tmdb.js'
 import { worksRouter } from './routes/works.js'
 
 const app = express()
@@ -13,6 +14,7 @@ if (!Number.isInteger(port) || port < 1 || port > 65535) {
 
 app.use(cors({ origin: 'http://localhost:5173' }))
 app.use(express.json())
+app.use('/api/tmdb', tmdbRouter)
 app.use('/api/works', worksRouter)
 
 app.get('/api/health', (_req, res) => {
